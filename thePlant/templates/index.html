@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三环租摆管理系统</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
+    <style>
+        .navbar-default{
+            margin-bottom: 0;
+            border-radius: 0;
+            height: auto;
+        }
+        body{
+            font-size: 16px;
+        }
+        .settings:hover{
+            background-color: #02a6f2;
+            color: #fff;
+        }
+        .logout:hover{
+            background-color: #e0291f;
+            color: #fff;
+        }
+        .main{
+            display: flex;
+            flex: 1;
+            height: 100%;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <!--顶部导航栏-->
+    <nav class="navbar navbar-default head-bar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">三环园艺</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span class="glyphicon glyphicon-user" style="margin-right: 1rem" aria-hidden="true">
+                  </span>
+                  用户名占位
+                  <span class="caret">
+                  </span>
+              </a>
+                <ul class="dropdown-menu" style="padding: 0;height: 80px;">
+                    <li style="height:50%">
+                        <button type="button" class="settings btn btn-default" style="border-radius:0;border: none;margin:0;padding:0;width:100%;height:100%;font-size: 16px">
+                            设&nbsp;&nbsp;&nbsp;置
+                            <span class="glyphicon glyphicon-cog " style="margin-right: 0;margin-left: 2rem" aria-hidden="true">
+                            </span>
+                        </button>
+                    </li>
+                    <li role="separator" class="divider" style="margin: 0">
+                    </li>
+                    <li style="height:50%">
+                        <button type="button" class="logout btn btn-default" style="border-radius:0;border: none;margin:0;padding:0;width: 100%;height:100%;font-size: 16px">
+                            登&nbsp;&nbsp;&nbsp;出
+                            <span class="glyphicon glyphicon-log-out" style="margin-right: 0;margin-left: 2rem" aria-hidden="true">
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--主体内容-->
+    <div class="container-fluid main" style="height: calc(100vh - 50px);">
+        <nav class="row" style="margin: 0">
+            <!--左侧导航栏-->
+            <div class="sidebar navbar-default" style="padding: 0;width: 257px;height: 100%">
+                <ul class="nav nav-pills nav-stacked navbar-default" style="border: 1px solid #e7e7e7;border-top:none;padding: 0;text-align: center">
+                    <li style="margin: 0">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true">
+                            </span>
+                            租摆信息
+                        </a>
+                    </li>
+                    <li role="separator" class="divider" style="margin: 0;border: 1px solid #e7e7e7">
+                    </li>
+                    <li style="margin: 0">
+                        <a href="/profit/">
+                            <span class="glyphicon glyphicon-yen" aria-hidden="true">
+                            </span>
+                            利润相关
+                        </a>
+                    </li>
+                    <li role="separator" class="divider" style="margin: 0;border: 1px solid #e7e7e7">
+                    </li>
+                    <li style="margin: 0">
+                        <a href="/costs/">
+                            <span class="glyphicon glyphicon-yen" aria-hidden="true">
+                            </span>
+                            支出杂项
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--右侧内容-->
+        <div style="width: calc(100vw - 257px);">
+            <div class="row" style="height: 40%;margin:0;display: flex">
+                    <!--录入信息-->
+                    <div class="col-md-5">
+                        <form class="form-inline" style="margin: 10px;">
+                            {% csrf_token %}
+                          <div class="form-group" style="margin:20px;">
+                            <label for="customerName"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></label>
+                            <input type="text" class="form-control" id="customerName" style="width: 144px" placeholder="客户名称">
+                          </div>
+                          <div class="form-group" style="margin: 20px" >
+                            <label for="amountGet"><span class="glyphicon glyphicon-yen" aria-hidden="true"></span></label>
+                            <input type="text" class="form-control" style="width: 144px" id="amountGet" placeholder="输入订单总额">
+                          </div>
+                            <br>
+                            <div class="form-group" style="margin: 20px;padding: 0" >
+                                <label for="dealDate"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></label>
+                                <input type="date" class="datepicker form-control" id="dealDate" placeholder="选择日期" >
+                            </div>
+                            <div class="form-group" style="margin: 20px;" >
+                                <label for="inlineRadioOptions"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>开具发票</label>
+                                <label class="radio-inline">
+                                  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0"> 未开
+                                </label>
+                                <label class="radio-inline">
+                                  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1"> 已开
+                                </label>
+                            </div>
+                            <br>
+                          <button type="submit" class="btn btn-default" href="/addOrder/" style="margin: 20px 20px 20px 150px;align-content: center" id="checkButton" >确认订单信息</button>
+                                <script>
+                                    // 获取按钮和输入框元素
+                                    var checkButton = document.getElementById("checkButton");
+                                    var customerName = document.getElementById("customerName");
+                                    var amountGet = document.getElementById("amountGet");
+                                    var dealDate = document.getElementById("dealDate");
+                                    var inlineRadio1 = document.getElementById("inlineRadio1"); // 未开发票单选框
+                                    var inlineRadio2 = document.getElementById("inlineRadio2"); // 已开发票单选框
+
+                                    // 添加按钮点击事件监听器
+                                    checkButton.addEventListener("click", function() {
+                                        // 检查输入框内容
+                                        if (customerName.value.trim() === "" || dealDate.value.trim() === "") {
+                                            // 如果有任何一个输入框为空，显示确认弹窗
+                                            var confirmResult = confirm("您有未填写的内容。是否继续？");
+                                            if (!confirmResult) {
+                                                // 如果用户点击了取消按钮，阻止表单提交或执行其他操作
+                                                return false;
+                                            }
+                                        } else {
+                                            //检查amountGet是否为float类型
+                                            if (isNaN(parseFloat(amountGet.value))) {
+                                                alert("订单金额必须为数字");
+                                                return false;
+                                            }
+                                            // 检查单选框是否有选中并获取选中的值
+                                            var invoiceStatus = null;
+                                            if (inlineRadio1.checked) {
+                                                invoiceStatus = inlineRadio1.value;
+                                            } else if (inlineRadio2.checked) {
+                                                invoiceStatus = inlineRadio2.value;
+                                            } else {
+                                                alert("请选择是否开具发票");
+                                                return false;
+                                            }
+                                            // 如果所有输入框都不为空，显示确认弹窗提交表单
+                                            var confirmResult = confirm("请确认订单信息：\n客户名称：" + customerName.value + "\n订单金额：" + amountGet.value + "\n订单日期：" + dealDate.value + "\n是否开具发票：" + invoiceStatus);
+                                            if (!confirmResult) {
+                                                // 如果用户点击了取消按钮，阻止表单提交或执行其他操作
+                                                return false;
+                                            }
+                                            //在这里执行数据录入操作
+                                            //构建要发送到Django后台的数据
+                                            var data = {
+                                                "customerName": customerName.value,
+                                                "amountGet": amountGet.value,
+                                                "dealDate": dealDate.value,
+                                                "invoiceStatus": invoiceStatus
+                                            };
+                                            //发送数据到Django后台
+                                            fetch('/addOrder/',{
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    'X-CSRFToken': '{{ csrf_token }}'
+                                                },
+                                                body: JSON.stringify(data)
+                                            })
+                                            .then(response => {
+                                                if (response.ok){
+                                                    alert("录入成功");
+                                                }
+                                                else{
+                                                    alert("录入失败");
+                                                }
+                                            })
+                                            .catch(error => {
+                                                alert("出错了")
+                                                console.log(error);
+                                            });
+                                        }
+                                    });
+                                </script>
+                        </form>
+                    </div>
+                    <!--补开发票-->
+                    <div class="col-md-7">
+                        <h2 style="margin-left: 20px">补开发票</h2>
+                        <ul class="nav nav-pills nav-stacked navbar-default" style="border: 1px solid #e7e7e7;border-top:none;padding: 0;text-align: center">
+                            <li role="separator" class="divider" style="margin: 0;border: 1px solid #e7e7e7">
+                        </ul>
+                        <table class="table table-striped" style="margin: 10px;overflow-y: scroll; ">
+                          <thead>
+                            <tr>
+                              <th>客户名称</th>
+                              <th>订单总额</th>
+                              <th>订单日期</th>
+                              <th>开具发票</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for item in needInvoice %}
+                            <tr>
+                              <td>{{ item.customer }}</td>
+                              <td>{{ item.income }}</td>
+                              <td>{{ item.date }}</td>
+                              <td><a href="/invoiceChange/?invoiceId={{ item.id }}">开具发票</a></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+            </div>
+            <!--下方内容-->
+            <div class="row" style="height: 60%;margin: 0">
+                <div class="col-md-12">
+                    <div class="bs-example" data-example-id="bordered-table">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>客户名称</th>
+                              <th>订单金额</th>
+                              <th>日期</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for item in orderList %}
+                            <tr>
+                              <th scope="row">{{ item.id }}</th>
+                              <td>{{ item.customer }}</td>
+                              <td>{{ item.income }}</td>
+                              <td>{{ item.date }}</td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

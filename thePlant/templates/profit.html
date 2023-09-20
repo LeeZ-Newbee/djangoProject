@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三环租摆管理系统</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
+    <style>
+        .navbar-default{
+            margin-bottom: 0;
+            border-radius: 0;
+            height: auto;
+        }
+        body{
+            font-size: 16px;
+        }
+        .settings:hover{
+            background-color: #02a6f2;
+            color: #fff;
+        }
+        .logout:hover{
+            background-color: #e0291f;
+            color: #fff;
+        }
+        .main{
+            display: flex;
+            flex: 1;
+            height: 100%;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<!--顶部导航栏-->
+    <nav class="navbar navbar-default head-bar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">三环园艺</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span class="glyphicon glyphicon-user" style="margin-right: 1rem" aria-hidden="true">
+                  </span>
+                  用户名占位
+                  <span class="caret">
+                  </span>
+              </a>
+                <ul class="dropdown-menu" style="padding: 0;height: 80px;">
+                    <li style="height:50%">
+                        <button type="button" class="settings btn btn-default" style="border-radius:0;border: none;margin:0;padding:0;width:100%;height:100%;font-size: 16px">
+                            设&nbsp;&nbsp;&nbsp;置
+                            <span class="glyphicon glyphicon-cog " style="margin-right: 0;margin-left: 2rem" aria-hidden="true">
+                            </span>
+                        </button>
+                    </li>
+                    <li role="separator" class="divider" style="margin: 0">
+                    </li>
+                    <li style="height:50%">
+                        <button type="button" class="logout btn btn-default" style="border-radius:0;border: none;margin:0;padding:0;width: 100%;height:100%;font-size: 16px">
+                            登&nbsp;&nbsp;&nbsp;出
+                            <span class="glyphicon glyphicon-log-out" style="margin-right: 0;margin-left: 2rem" aria-hidden="true">
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--主体内容-->
+    <div class="container-fluid main" style="min-height: calc(100vh - 50px);">
+        <nav class="row" style="margin: 0">
+            <!--左侧导航栏-->
+            <div class="sidebar navbar-default" style="padding: 0;width: 257px;height: 100%">
+                <ul class="nav nav-pills nav-stacked navbar-default" style="border: 1px solid #e7e7e7;border-top:none;padding: 0;text-align: center">
+                    <li style="margin: 0">
+                        <a href="/index/">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true">
+                            </span>
+                            租摆信息
+                        </a>
+                    </li>
+                    <li role="separator" class="divider" style="margin: 0;border: 1px solid #e7e7e7">
+                    </li>
+                    <li style="margin: 0">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-yen" aria-hidden="true">
+                            </span>
+                            利润相关
+                        </a>
+                    </li>
+                    <li role="separator" class="divider" style="margin: 0;border: 1px solid #e7e7e7">
+                    </li>
+                    <li style="margin: 0">
+                        <a href="/costs/">
+                            <span class="glyphicon glyphicon-yen" aria-hidden="true">
+                            </span>
+                            支出杂项
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row" style="width: calc(100vw - 257px);margin: 0">
+            <!--主体头部内容-->
+            <div>
+                <h2 style="padding-left: 30px">利润相关信息</h2>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>年份</th>
+                      <th>收入</th>
+                      <th>支出</th>
+                      <th>利润</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                          <form method="POST">
+                              {% csrf_token %}
+                              <label for="year">选择年份：</label>
+                              <input type="number" id="year" name="year" min='2023' max='2099' placeholder="选择年度">
+                              <button type="submit">计算总收入</button>
+                          </form>
+                      </td>
+                      <td>{{ totalIncome }}</td>
+                      <td>{{ totalCosts }}</td>
+                      <td>{{ yearProfit }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            <!--主体底部内容-->
+
+
+        </div>
+    </div>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
